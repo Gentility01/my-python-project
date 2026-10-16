@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+
+{% block title %}My Books | BookShelf{% endblock %}
+
+{% block content %}
+
+<section class="books-page">
+
+```
+<div class="container">
+
+    <!-- Page Header -->
+    <div class="page-header">
+
+        <div>
+            <span class="eyebrow">LIBRARY</span>
+            <h1>My Book Collection</h1>
+            <p>Browse and manage the books in your personal collection.</p>
+        </div>
+
+        <div class="user-card">
+
+            <div class="avatar">
+                {{ user.username|first|upper }}
+            </div>
+
+            <div>
+                <strong>{{ user.username }}</strong>
+                <span>{{ user.email }}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">📚</div>
+
+            <div>
+                <span class="stat-label">Total Books</span>
+                <strong>{{ books|length }}</strong>
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">✦</div>
+
+            <div>
+                <span class="stat-label">Collection</span>
+                <strong>My Library</strong>
+            </div>
+
+        </div>
+
+        <div class="stat-card">
+
+            <div class="stat-icon">✓</div>
+
+            <div>
+                <span class="stat-label">Status</span>
+                <strong>Active</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Books Section -->
+    <section class="library-section">
+
+        <div class="section-header">
+
+            <div>
+                <h2>All Books</h2>
+                <p>Your complete book collection.</p>
+            </div>
+
+            <div class="library-actions">
+
+                <div class="search-box">
+
+                    <span class="search-icon">⌕</span>
+
+                    <input
+                        type="search"
+                        id="bookSearch"
+                        placeholder="Search books..."
+                        aria-label="Search books"
+                    >
+
+                </div>
+
+                <button
+                    class="sort-button"
+                    id="sortButton"
+                    type="button"
+                >
+                    Sort A-Z
+                </button>
+
+            </div>
+
+        </div>
+
+        {% if books %}
+
+            <div class="books-grid" id="booksGrid">
+
+                {% for book in books %}
+
+                    <article
+                        class="book-card"
+                        data-title="{{ book.title|lower }}"
+                        data-author="{{ book.author|lower }}"
+                    >
+
+                        <!-- Book Cover -->
+                        <div class="book-cover">
+
+                            {% if book.cover_image %}
+
+                                <img
+                                    src="{{ book.cover_image.url }}"
+                                    alt="{{ book.title }} cover"
+                                >
+
+                            {% else %}
+
+                                <span class="book-cover-letter">
+                                    {{ book.title|first|upper }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                        <!-- Book Information -->
+                        <div class="book-content">
+
+                            <span class="book-category">
+                                BOOK
+                            </span>
+
+                            <h3 class="book-title">
+                                {{ book.title }}
+                            </h3>
+
+                            <p class="book-author">
+                                <span>By</span>
+                                {{ book.author }}
+                            </p>
+
+                            <div class="book-footer">
+
+                                <div class="price">
+
+                                    <span>Price</span>
+
+                                    <strong>
+                                        ${{ book.price }}
+                                    </strong>
+
+                                </div>
+
+                                <button
+                                    class="view-button"
+                                    type="button"
+                                    data-title="{{ book.title }}"
+                                >
+                                    View
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- No Search Results -->
+            <div
+                class="no-results"
+                id="noResults"
+            >
+
+                <div class="no-results-icon">
+                    ⌕
+                </div>
+
+                <h3>No books found</h3>
+
+                <p>
+                    Try searching with a different title or author.
+                </p>
+
+            </div>
+
+        {% else %}
+
+            <!-- Empty Library -->
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📚
+                </div>
+
+                <h2>Your library is empty</h2>
+
+                <p>
+                    You haven't added any books to your collection yet.
+                </p>
+
+                <button
+                    class="primary-button"
+                    type="button"
+                >
+                    Add Your First Book
+                </button>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+```
+
+</section>
+
+<!-- Book Modal -->
+
+<div
+    class="modal"
+    id="bookModal"
+    aria-hidden="true"
+>
+
+```
+<div
+    class="modal-overlay"
+    id="modalOverlay"
+></div>
+
+<div class="modal-content">
+
+    <button
+        class="modal-close"
+        id="modalClose"
+        type="button"
+        aria-label="Close"
+    >
+        &times;
+    </button>
+
+    <span class="eyebrow">
+        BOOK DETAILS
+    </span>
+
+    <h2 id="modalTitle">
+        Book Title
+    </h2>
+
+    <p>
+        You selected this book from your collection.
+    </p>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

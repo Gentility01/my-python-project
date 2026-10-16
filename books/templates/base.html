@@ -1,0 +1,60 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>{% block title %}My Book Collection{% endblock %}</title>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% block extra_css %}{% endblock %}
+
+
+</head>
+
+<body>
+
+
+<header class="site-header">
+    <div class="container header-content">
+        <a href="#" class="brand">
+            <span class="brand-icon">B</span>
+            <span>BookShelf</span>
+        </a>
+
+        <nav class="main-nav">
+            <a href="#" class="nav-link active">My Books</a>
+            <a href="#" class="nav-link">Authors</a>
+            <a href="#" class="nav-link">About</a>
+        </nav>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+            ☰
+        </button>
+    </div>
+</header>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-content">
+        <p>&copy; {% now "Y" %} BookShelf. All rights reserved.</p>
+        <p>Your personal book collection.</p>
+    </div>
+</footer>
+
+<script src="{% static 'js/main.js' %}"></script>
+
+{% block extra_js %}{% endblock %}
+
+
+</body>
+</html>
